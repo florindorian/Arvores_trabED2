@@ -25,7 +25,7 @@ CC_FLAGS = -c -W -Wall -ansi -pedantic -std=c99
 # =====================
 # COMPILAÇÃO E LINKAGEM
 # =====================
-all: objFolder $(PROJ_NAME)
+all: objFolder $(PROJ_NAME) clean
 
 $(PROJ_NAME): $(OBJ)
 	@echo Fazendo o build do binario usando o GCC Linker: $@
