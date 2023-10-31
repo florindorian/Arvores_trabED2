@@ -100,7 +100,7 @@ int main() {
   // LIBERANDO A ÁRVORE
   libera_ArvBin(raiz);
 
-  printf("Terminou diferente\n");
+  printf("Terminou diferente de novo\n");
   return 0;
 }
 
