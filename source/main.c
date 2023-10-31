@@ -1,4 +1,4 @@
-#include "ArvoreBinaria.h"
+#include "ArvoreBinaria/ArvoreBinaria.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

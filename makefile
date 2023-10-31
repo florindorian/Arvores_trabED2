@@ -1,6 +1,7 @@
-# MAKEFILE COM PADRÃO ORGANIZACIONAL
-
-# VARIÁVEIS
+# Makefile para automatizar a compilação múltipla de arquivos-fonte e de forma recursiva
+# ==================================================
+# VARIÁVEIS DE COMPILAÇÃO
+# ==================================================
 # Nome do projeto
 PROJ_NAME = main
 
@@ -10,22 +11,36 @@ SO = linux
 # Compilador
 CC = gcc
 
+# Coleção de Flags
+CC_FLAGS = -c -W -Wall -ansi -pedantic -std=c99
+
+
+
+# ==================================================
+# VARIÁVEIS DE DIRETÓRIOS E DE ARQUIVOS
+# ==================================================
 # Coleção de arquivos .c
-C_SOURCE = $(wildcard ./source/*.c)
+C_SOURCE = $(shell find ./source -type f -name "*.c")
 
 # Coleção de arquivos .h
-H_SOURCE = $(wildcard ./source/*.h)
+H_SOURCE = $(shell find ./source -type f -name "*.h")
 
 # Coleção de arquivos .o
 OBJ = $(patsubst ./source/%.c, ./objects/%.o, $(C_SOURCE))
 
-# Coleção de Flags
-CC_FLAGS = -c -W -Wall -ansi -pedantic -std=c99
+# Lista de diretórios da pasta source
+SOURCE_DIRS := $(shell find ./source -type d)
 
-# =====================
+# Lista de diretórios da pasta objects
+OBJ_DIRS = $(patsubst ./source%, ./objects%, $(SOURCE_DIRS))
+$(foreach dir, $(OBJ_DIRS), $(shell mkdir -p $(dir)))
+
+
+
+# ==================================================
 # COMPILAÇÃO E LINKAGEM
-# =====================
-all: objFolder $(PROJ_NAME) clean
+# ==================================================
+all: $(PROJ_NAME) clean
 
 $(PROJ_NAME): $(OBJ)
 	@echo Fazendo o build do binario usando o GCC Linker: $@
@@ -42,9 +57,7 @@ $(PROJ_NAME): $(OBJ)
 	$(CC) $< $(CC_FLAGS) -o $@
 	@echo _
 
-objFolder:
-	@mkdir objects
-
+# PARA LIMPAR OS ARQUIVOS .o
 clean:
 ifeq ($(SO), windows)
 	rd /s /q objects
