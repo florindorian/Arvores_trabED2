@@ -1,3 +1,5 @@
 .ccls-cache
 .git
+.breakpoints
 main
+main-debug
